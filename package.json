@@ -1,0 +1,29 @@
+{
+  "name": "skyscanner-api",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index.js",
+    "test": "mocha $(find . -name '*spec.js' -not -path './node_modules/*') --compilers js:babel-register"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.21.0",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "fluture": "^4.3.0",
+    "isomorphic-fetch": "^2.2.1",
+    "ramda": "^0.23.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-register": "^6.18.0",
+    "mocha": "^3.2.0",
+    "power-assert": "^1.4.2",
+    "sinon": "^1.17.7"
+  }
+}
