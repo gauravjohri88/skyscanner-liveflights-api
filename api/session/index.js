@@ -1,5 +1,5 @@
 import { after } from 'fluture';
-import { chain, compose, lensProp, map, merge, over, partial, prop } from 'ramda';
+import { chain, compose, lensProp, map, merge, over, partial, prop, tap } from 'ramda';
 import { stringify as formatQuerystring } from 'querystring';
 
 import { makeRequest, makeUrl } from '../utils';
@@ -29,9 +29,15 @@ export const createRequestConfig = query => {
   return over(lensProp('body'), compose(formatQuerystring, merge(query)), config);
 }
 
-const requestSession = compose(makeRequest, createRequestConfig);
+const requestSession = compose(
+  makeRequest,
+  createRequestConfig
+);
+
+const logSession = url => console.log(`Session created at ${url}`);
 
 export default query => compose(
+  map(tap(logSession)),
   getPollLocation,
   requestSession(query),
   makeUrl
