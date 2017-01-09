@@ -4,14 +4,14 @@ import { spy } from 'sinon';
 import { createSession, makeRequest, makeUrl } from './';
 
 describe('API: Utilities', () => {
-  describe.only('makeUrl', () => {
+  describe('makeUrl', () => {
     it('constructs a URL including provided path', () => {
-      const result = makeUrl('great', 123);
+      const result = makeUrl('great');
       assert.equal(result, 'http://api.skyscanner.net/apiservices/pricing/v1.0/great?apikey=123');
     });
 
     it('constructs a URL without a provided path', () => {
-      const result = makeUrl(null, 123);
+      const result = makeUrl(null);
       assert.equal(result, 'http://api.skyscanner.net/apiservices/pricing/v1.0/?apikey=123');
     });
   });

@@ -3,13 +3,15 @@ import isomorphicFetch from 'isomorphic-fetch';
 import { chain, compose, lensProp, merge, over, set } from 'ramda';
 import { format as formatUrl } from 'url';
 
-export const authenticate = apiKey =>
+const urlAuthentication = apiKey =>
   over(lensProp('query'), merge({ apikey: apiKey }))
 
 const addPath = path => set(lensProp('pathname'), `apiservices/pricing/v1.0/${path || ''}`);
 
-export const makeUrl = (path, apiKey = process.env.API_KEY) => compose(
-  formatUrl, authenticate(apiKey), addPath(path))
+export const authenticateUrl = urlAuthentication(process.env.API_KEY);
+
+export const makeUrl = path => compose(
+  formatUrl, authenticateUrl, addPath(path))
 ({
   protocol: 'http',
   host: 'api.skyscanner.net'
