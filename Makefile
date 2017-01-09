@@ -10,7 +10,11 @@ $(LOCAL_DEPS): check-yarn-install
 	yarn
 
 test: $(LOCAL_DEPS)
-	yarn test
+	API_KEY=123 yarn test
+
+run: $(LOCAL_DEPS)
+	yarn run query
 
 .PHONY: \
+	run \
 	test \

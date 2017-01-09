@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
+    "query": "babel-node index.js",
     "test": "mocha $(find . -name '*spec.js' -not -path './node_modules/*') --compilers js:babel-register"
   },
   "author": "",
