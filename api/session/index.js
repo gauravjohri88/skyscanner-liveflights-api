@@ -1,5 +1,5 @@
 import { after } from 'fluture';
-import { chain, compose, map, partial, prop } from 'ramda';
+import { chain, compose, lensProp, map, merge, over, partial, prop } from 'ramda';
 import { stringify as formatQuerystring } from 'querystring';
 
 import { makeRequest, makeUrl } from '../utils';
@@ -13,23 +13,26 @@ const getPollLocation = compose(
   map(prop(['headers']))
 );
 
-const requestSession = makeRequest({
-  body: formatQuerystring({
-    adults: 1,
-    cabinclass: 'Economy',
-    country: 'UK',
-    currency: 'GBP',
-    destinationplace: 'BOS-iata',
-    inbounddate: '2017-02-24',
-    locale: 'en-GB',
-    locationschema: 'iata',
-    originplace: 'SFO-iata',
-    outbounddate: '2017-02-23'
-  }),
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  method: 'POST',
-})
+export const createRequestConfig = query => {
+  const config = {
+    body: {
+      country: 'UK',
+      currency: 'GBP',
+      locale: 'en-GB',
+      locationschema: 'sky'
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    method: 'POST',
+  };
+  return over(lensProp('body'), compose(formatQuerystring, merge(query)), config);
+}
 
-export const createSession = compose(getPollLocation, requestSession, makeUrl);
+const requestSession = compose(makeRequest, createRequestConfig);
+
+export const createSession = query => compose(
+  getPollLocation,
+  requestSession(query),
+  makeUrl
+)();
