@@ -31,7 +31,7 @@ export const createRequestConfig = query => {
 
 const requestSession = compose(makeRequest, createRequestConfig);
 
-export const createSession = query => compose(
+export default query => compose(
   getPollLocation,
   requestSession(query),
   makeUrl

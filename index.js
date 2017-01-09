@@ -1,6 +1,10 @@
-import { createSession } from './api/session';
+import { compose } from 'ramda';
 
-createSession({
+import createSession from './api/session';
+
+const submitQuery = compose(createSession);
+
+submitQuery({
   adults: 1,
   cabinclass: 'Economy',
   originplace: 'SFO-iata',
