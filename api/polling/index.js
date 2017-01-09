@@ -1,8 +1,11 @@
-import { compose, map } from 'ramda';
+import { after } from 'fluture';
+import { compose, map, path } from 'ramda';
 import { format as formatUrl, parse as parseUrl } from 'url';
 
-import { authenticateUrl } from '../utils';
+import { authenticateUrl, getJson, makeRequest} from '../utils';
 
 const addUrlAuthentication = compose(formatUrl, authenticateUrl, parseUrl);
 
-export default map(addUrlAuthentication);
+const pollEndpoint = f => f.chain(compose(map(path(['Status'])), getJson, makeRequest()));
+
+export default compose(pollEndpoint, map(addUrlAuthentication));

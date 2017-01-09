@@ -28,4 +28,4 @@ export const makeRequest = config => (url, fetch = isomorphicFetch) =>
     })()
   });
 
-const getJson = chain(response => fromPromise(() => response.json(), 0));
+export const getJson = chain(response => fromPromise(() => response.json(), 0));
