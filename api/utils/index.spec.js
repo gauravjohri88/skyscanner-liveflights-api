@@ -32,13 +32,17 @@ describe('API: Utilities', () => {
       });
     });
 
-    it('rejects if the result doesn\'t include a successful statuts', () => {
-      const fetch = spy(() => Promise.resolve({ ok: false }));
+    it('rejects if the result doesn\'t include a successful status', () => {
+      const fetch = spy(() => Promise.resolve({ ok: false, status: 404 }));
 
       return new Promise((resolve, reject) => {
         makeRequest()('http://www.bbc.co.uk/hello', fetch).fork(
           err => {
             assert.ok(err instanceof Error);
+            assert.deepEqual(err.config, {
+              status: 404,
+              url: 'http://www.bbc.co.uk/hello'
+            });
             resolve();
           },
           reject
