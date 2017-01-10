@@ -1,10 +1,7 @@
 import Future, { after } from 'fluture';
 import { chain, compose, map, partial, path, propEq } from 'ramda';
-import { format as formatUrl, parse as parseUrl } from 'url';
 
-import { authenticateUrl, getJson, makeRequest} from '../utils';
-
-const addUrlAuthentication = compose(formatUrl, authenticateUrl, parseUrl);
+import { getJson, makeRequest} from '../utils';
 
 const poll = compose(getJson, makeRequest());
 
@@ -24,7 +21,4 @@ export const fetchData = (url, pollEndpoint = poll) =>
     )
   };
 
-export default compose(
-  chain(url => Future(fetchData(url))),
-  map(addUrlAuthentication)
-);
+export default chain(compose(Future, fetchData));
