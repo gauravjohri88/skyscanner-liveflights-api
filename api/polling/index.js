@@ -1,5 +1,5 @@
 import Future, { after } from 'fluture';
-import { chain, compose, map, partial, path, propEq } from 'ramda';
+import { chain, compose, lensIndex, lensProp, map, partial, path, prop, propEq, view } from 'ramda';
 
 import { getJson, makeRequest} from '../utils';
 
@@ -7,9 +7,11 @@ const poll = compose(getJson, makeRequest());
 
 export const pollRes = (rej, res, fetchData, url, data, timeout = setTimeout) => {
   if (propEq('Status', 'UpdatesComplete', data)) {
+    console.log('Query result complete');
     res(data);
   } else {
-    timeout(() => fetchData(url)(rej, res), 1000);
+    console.log('Query result incomplete. Retrying...')
+    timeout(() => fetchData(url)(rej, res), 3000);
   }
 }
 
