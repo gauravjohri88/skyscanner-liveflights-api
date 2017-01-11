@@ -32,21 +32,56 @@ describe('API: Utilities', () => {
       });
     });
 
-    it('rejects if the result doesn\'t include a successful status', () => {
-      const fetch = spy(() => Promise.resolve({ ok: false, status: 404 }));
+    describe('Resolves', () => {
+      it('200 - 299 range', () => {
+        const expectedData = { something: 'naughty' };
+        const fetch = spy(() => Promise.resolve({ ok: true }));
 
-      return new Promise((resolve, reject) => {
-        makeRequest()('http://www.bbc.co.uk/hello', fetch).fork(
-          err => {
-            assert.ok(err instanceof Error);
-            assert.deepEqual(err.config, {
-              status: 404,
-              url: 'http://www.bbc.co.uk/hello'
-            });
-            resolve();
-          },
-          reject
-        );
+        return new Promise((resolve, reject) => {
+          makeRequest({ nice: 'wahey' })('http://www.bbc.co.uk/hello', fetch).fork(
+            reject,
+            data => {
+              assert.ok(fetch.calledWith('http://www.bbc.co.uk/hello', { nice: 'wahey' }));
+              resolve();
+            }
+          );
+        });
+      });
+
+      it('304 range', () => {
+        const expectedData = { something: 'naughty' };
+        const fetch = spy(() => Promise.resolve({ status: 304 }));
+
+        return new Promise((resolve, reject) => {
+          makeRequest({ nice: 'wahey' })('http://www.bbc.co.uk/hello', fetch).fork(
+            reject,
+            data => {
+              assert.ok(fetch.calledWith('http://www.bbc.co.uk/hello', { nice: 'wahey' }));
+              resolve();
+            }
+          );
+        });
+      });
+    });
+
+
+    describe('Rejects', () => {
+      it('rejects if the result doesn\'t include a successful status', () => {
+        const fetch = spy(() => Promise.resolve({ ok: false, status: 404 }));
+
+        return new Promise((resolve, reject) => {
+          makeRequest()('http://www.bbc.co.uk/hello', fetch).fork(
+            err => {
+              assert.ok(err instanceof Error);
+              assert.deepEqual(err.config, {
+                status: 404,
+                url: 'http://www.bbc.co.uk/hello'
+              });
+              resolve();
+            },
+            reject
+          );
+        });
       });
     });
   });

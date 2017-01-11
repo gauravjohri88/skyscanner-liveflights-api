@@ -25,7 +25,7 @@ export const makeRequest = config => (url, fetch = isomorphicFetch) =>
       const result = await fetch(url, config);
       if (!result.ok && result.status !== 304) {
         return rej(new ApiError(
-          'The status returned isn\'t within the 200-299 range',
+          'The status returned isn\'t within the 200-299 range or a 304',
           {
             status: result.status,
             url
