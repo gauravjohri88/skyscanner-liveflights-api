@@ -1,9 +1,17 @@
-import Future, { after } from 'fluture';
+import Future, { after, of } from 'fluture';
 import { chain, compose, lensIndex, lensProp, map, partial, path, prop, propEq, view } from 'ramda';
+import { Nothing } from 'sanctuary';
 
 import { getJson, makeRequest} from '../utils';
 
-const poll = compose(getJson, makeRequest());
+const handleResponse = chain(res => {
+  if (res.status === 304) {
+    return of(Nothing());
+  }
+  return getJson(res);
+});
+
+const poll = compose(handleResponse, makeRequest());
 
 export const pollRes = (rej, res, fetchData, url, data, timeout = setTimeout) => {
   if (propEq('Status', 'UpdatesComplete', data)) {

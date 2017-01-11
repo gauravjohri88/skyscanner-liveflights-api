@@ -1304,6 +1304,10 @@ qs@~6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.0.tgz#f403b264f23bc01228c74131b407f18d5ea5d442"
 
+ramda@0.21.x:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.21.0.tgz#a001abedb3ff61077d4ff1d577d44de77e8d0a35"
+
 ramda@^0.23.0:
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.23.0.tgz#ccd13fff73497a93974e3e86327bfd87bd6e8e2b"
@@ -1417,6 +1421,10 @@ samsam@1.1.2, samsam@~1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/samsam/-/samsam-1.1.2.tgz#bec11fdc83a9fda063401210e40176c3024d1567"
 
+sanctuary-def@0.6.x:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-def/-/sanctuary-def-0.6.0.tgz#b91d6763a1becb35e89461dea517bb01b3724885"
+
 sanctuary-type-classes@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/sanctuary-type-classes/-/sanctuary-type-classes-2.0.1.tgz#06b6cfd78e3e8d85cd93f5c2d7b08796b68d1e74"
@@ -1426,6 +1434,13 @@ sanctuary-type-classes@^2.0.1:
 sanctuary-type-identifiers@1.0.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/sanctuary-type-identifiers/-/sanctuary-type-identifiers-1.0.0.tgz#e8f359f006cb5e624cfb8464603fc114608bde9f"
+
+sanctuary@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/sanctuary/-/sanctuary-0.11.1.tgz#7ee874e973e03074f57f34b5773b11089484b85a"
+  dependencies:
+    ramda "0.21.x"
+    sanctuary-def "0.6.x"
 
 semver@~5.3.0:
   version "5.3.0"
