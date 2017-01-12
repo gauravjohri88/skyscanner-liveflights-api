@@ -8,7 +8,7 @@
     "test": "mocha $(find . -name '*spec.js' -not -path './node_modules/*') --compilers js:babel-register"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "babel-core": "^6.21.0",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
