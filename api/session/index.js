@@ -1,9 +1,9 @@
 import { after } from 'fluture';
-import { chain, compose, lensProp, map, merge, over, partial, prop, tap } from 'ramda';
+import { always, chain, compose, lensProp, map, merge, over, partial, prop, tap } from 'ramda';
 import { stringify as formatQuerystring } from 'querystring';
 import { format as formatUrl, parse as parseUrl } from 'url';
 
-import { authenticateUrl, makeRequest, makeUrl } from '../utils';
+import { authenticateUrl, log, makeRequest, makeUrl } from '../utils';
 
 const delayResponse = chain(partial(after, [1000]));
 
@@ -36,9 +36,9 @@ const requestSession = compose(
   createRequestConfig
 );
 
-const logSession = map(tap(() => console.log('Session now accessible \n')));
+const logSession = log(always('Session now accessible \n'));
 
-const logDelay = map(tap(url => console.log(`Temporarily witholding session access to due to https://support.business.skyscanner.net/hc/en-us/articles/211308489-Flights-Live-Pricing?_ga=1.109063173.1468313731.1483528061#poll \n`)));
+const logDelay = log(always(`Temporarily witholding session access to due to https://support.business.skyscanner.net/hc/en-us/articles/211308489-Flights-Live-Pricing?_ga=1.109063173.1468313731.1483528061#poll \n`));
 
 export default query => compose(
   logSession,
