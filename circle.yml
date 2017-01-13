@@ -1,0 +1,11 @@
+machine:
+  node:
+    version: 6.1.0
+
+dependencies:
+  override:
+    - echo "Ignore CircleCI defaults"
+
+test:
+  override:
+    - make test

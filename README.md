@@ -1,5 +1,7 @@
 # skyscanner-api
 
+[![CircleCI](https://circleci.com/gh/jameshopkins/skyscanner-api.svg?style=svg)](https://circleci.com/gh/jameshopkins/skyscanner-api)
+
 > A javascript API wrapping the [Skyscanner Live Flights API](https://github.com/Skyscanner/api-documentation/tree/master/live_flights_pricing)
 
 ## How To Use
