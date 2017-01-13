@@ -10,7 +10,13 @@ $(LOCAL_DEPS): check-yarn-install
 	yarn
 
 test: $(LOCAL_DEPS)
-	API_KEY=123 yarn test
+	yarn test
+
+coverage: $(LOCAL_DEPS)
+	yarn coverage
+
+coverage-coveralls: $(LOCAL_DEPS)
+	yarn coverage:coveralls
 
 .PHONY: \
 	run \

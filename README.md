@@ -1,6 +1,7 @@
 # skyscanner-api
 
 [![CircleCI](https://circleci.com/gh/jameshopkins/skyscanner-api.svg?style=svg)](https://circleci.com/gh/jameshopkins/skyscanner-api)
+[![Coverage Status](https://coveralls.io/repos/github/jameshopkins/skyscanner-api/badge.svg?branch=master)](https://coveralls.io/github/jameshopkins/skyscanner-api?branch=master)
 
 > A javascript API wrapping the [Skyscanner Live Flights API](https://github.com/Skyscanner/api-documentation/tree/master/live_flights_pricing)
 
@@ -88,4 +89,5 @@ The NPM entrypoint into the module is uncompiled. This means that you'll have to
 ## Running Tests
 ```bash
 make test
+make coverage
 ```
