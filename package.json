@@ -3,8 +3,9 @@
   "private": true,
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "compile": "babel src --out-dir dist --ignore spec.js",
     "coverage": "nyc yarn test && nyc report",
     "coverage:coveralls": "yarn coverage -- --reporter=text-lcov | coveralls",
     "test": "API_KEY=123 mocha $(find . -name '*spec.js' -not -path './node_modules/*') --compilers js:babel-register"
