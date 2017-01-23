@@ -1,9 +1,9 @@
-# skyscanner-api
+# skyscanner-liveflights-api
 
-[![CircleCI](https://circleci.com/gh/jameshopkins/skyscanner-api.svg?style=svg)](https://circleci.com/gh/jameshopkins/skyscanner-api)
-[![Coverage Status](https://coveralls.io/repos/github/jameshopkins/skyscanner-api/badge.svg?branch=master)](https://coveralls.io/github/jameshopkins/skyscanner-api?branch=master)
+[![CircleCI](https://circleci.com/gh/jameshopkins/skyscanner-liveflights-api.svg?style=svg)](https://circleci.com/gh/jameshopkins/skyscanner-liveflights-api)
+[![Coverage Status](https://coveralls.io/repos/github/jameshopkins/skyscanner-liveflights-api/badge.svg)](https://coveralls.io/github/jameshopkins/skyscanner-liveflights-api)
 
-> A javascript API wrapping the [Skyscanner Live Flights API](https://github.com/Skyscanner/api-documentation/tree/master/live_flights_pricing)
+> A point-free, monadic JS API wrapping the [Skyscanner Live Flights API](https://github.com/Skyscanner/api-documentation/tree/master/live_flights_pricing)
 
 ## How To Use
 
@@ -18,7 +18,7 @@ You can either refer to the [documentation](https://support.business.skyscanner.
 2. Construct the query
 
   ```js
-  import submitQuery from 'skyscanner-api';
+  import submitQuery from 'skyscanner-liveflights-api';
 
   submitQuery({
     adults: 1,
@@ -50,7 +50,7 @@ Currently the only supported parameters are:
 
 If you inspect the source code, you'll notice that all integral functionality is encapsulated in function compositions.
 
-This concept means that, if required, you can build your own custom interface of `skyscanner-api` - itself, a composition of functions.
+This concept means that, if required, you can build your own custom interface of `skyscanner-liveflights-api` - itself, a composition of functions.
 
 For example, the [main entrypoint](index.js), is a composition of two other functions (`pollForResults` and `createSession`) that, when used together, make up the standard interface.
 
@@ -58,7 +58,7 @@ You could very easily extend this continutation. E.g
 
 ```js
 import { compose, lensProp, lensIndex, map, view } from 'ramda';
-import submitQuery from 'skyscanner-api';
+import submitQuery from 'skyscanner-liveflights-api';
 
 const focusLens = compose(lensProp('Itineraries'), lensProp(0));
 const focusOnItineraryItem = map(view(focusLens)))
@@ -82,12 +82,16 @@ getTheFirstItemInTheItinerary({
 
 ```
 
-## Limitations
-
-The NPM entrypoint into the module is uncompiled. This means that you'll have to include the [same Babel plugins](.babelrc) that are included in this project, when using it. If I decide to publish it into the NPM registry, then I'll add a compilation step into the prepublish hook, which will resolve this.
-
 ## Running Tests
 ```bash
 make test
+# OR
 make coverage
 ```
+
+## Contributing
+1. Fork the repo and create your branch from `master`
+2. `yarn`
+3. Add tests
+4. Do your shizzle
+5. Create a PR

@@ -1,6 +1,5 @@
 {
-  "name": "skyscanner-api",
-  "private": true,
+  "name": "skyscanner-liveflights-api",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
@@ -8,22 +7,33 @@
     "compile": "babel src --out-dir dist --ignore spec.js",
     "coverage": "nyc yarn test && nyc report",
     "coverage:coveralls": "yarn coverage -- --reporter=text-lcov | coveralls",
+    "prepublish": "yarn compile",
     "test": "API_KEY=123 mocha $(find . -name '*spec.js' -not -path './node_modules/*') --compilers js:babel-register"
   },
-  "author": "",
+  "files": [
+    "dist",
+    "yarn.lock",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jameshopkins/skyscanner-liveflights-api.git"
+  },
+  "author": "James Muir-Hopkins <jameshopkins0709@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "babel-core": "^6.21.0",
-    "babel-plugin-transform-async-to-generator": "^6.16.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
     "fluture": "^4.3.0",
     "isomorphic-fetch": "^2.2.1",
     "ramda": "^0.23.0",
     "sanctuary": "^0.11.1"
   },
   "devDependencies": {
+    "babel-core": "^6.21.0",
     "babel-cli": "^6.18.0",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-register": "^6.18.0",
     "coveralls": "^2.11.15",
     "mocha": "^3.2.0",
