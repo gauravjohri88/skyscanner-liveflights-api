@@ -19,7 +19,7 @@ export const pollRes = (rej, res, fetchData, url, data, timeout = setTimeout) =>
     res(data);
   } else {
     console.log('Query result incomplete. Retrying...')
-    timeout(() => fetchData(url)(rej, res), 3000);
+    timeout(() => fetchData(url)(rej, res), 1000);
   }
 }
 

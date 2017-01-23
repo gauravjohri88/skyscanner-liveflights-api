@@ -36,7 +36,7 @@ describe('API: Polling', () => {
           timeout
         );
 
-        assert(timeout.calledWith(match.func, 3000));
+        assert(timeout.calledWith(match.func, 1000));
       });
 
       it('calls fetchData to begin loop', () => {
