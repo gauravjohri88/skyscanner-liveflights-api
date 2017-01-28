@@ -12,6 +12,9 @@ $(LOCAL_DEPS): check-yarn-install
 test: $(LOCAL_DEPS)
 	yarn test
 
+test-watch: $(LOCAL_DEPS)
+	yarn test -- --watch
+
 coverage: $(LOCAL_DEPS)
 	yarn coverage
 
