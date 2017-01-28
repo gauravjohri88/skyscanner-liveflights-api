@@ -13,7 +13,7 @@ const handleResponse = chain(res => {
 
 const poll = compose(handleResponse, makeRequest());
 
-export const pollRes = (rej, res, fetchData, url, data, timeout = setTimeout) => {
+export const resolvePollRes = (rej, res, fetchData, url, data, timeout = setTimeout) => {
   if (propEq('Status', 'UpdatesComplete', data)) {
     console.log('Query result complete');
     res(data);
@@ -23,7 +23,7 @@ export const pollRes = (rej, res, fetchData, url, data, timeout = setTimeout) =>
   }
 }
 
-export const fetchData = (url, pollEndpoint = poll) =>
+export const fetchData = (url, pollEndpoint = poll, pollRes = resolvePollRes) =>
   (rej, res) => {
     pollEndpoint(url).fork(
       rej,

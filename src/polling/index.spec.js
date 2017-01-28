@@ -1,10 +1,36 @@
+import { of, reject } from 'fluture';
 import assert from 'power-assert';
 import { match, spy } from 'sinon';
 
-import { fetchData, pollRes } from './';
+import { fetchData, resolvePollRes } from './';
 
 describe('API: Polling', () => {
-  describe('pollRes', () => {
+  describe('fetchData', () => {
+    it('uses the reject branch of the parent future when necessary', () => {
+      const rej = spy();
+      const res = null;
+      const poll = () => reject('This is an error!');
+      fetchData('http://moo', poll)(rej, res);
+      assert(rej.calledWith('This is an error!'));
+    });
+
+    it('calls resolvePollRes to process poll result', () => {
+      const rej = () => {};
+      const res = () => {};
+      const poll = () => of({ some: 'data' });
+      const pollRes = spy();
+      fetchData('http://moo', poll, pollRes)(rej, res);
+      assert(pollRes.calledWith(
+        rej,
+        res,
+        fetchData,
+        'http://moo',
+        { some: 'data' }
+      ))
+    });
+  });
+
+  describe('resolvePollRes', () => {
     it('returns data once the data is ready', () => {
       const rej = spy();
       const res = spy();
@@ -13,7 +39,7 @@ describe('API: Polling', () => {
         Status: 'UpdatesComplete'
       };
 
-      const result = pollRes(rej, res, fetchData, 'url', data);
+      const result = resolvePollRes(rej, res, fetchData, 'url', data);
       assert(res.calledWith(data));
     });
 
@@ -27,7 +53,7 @@ describe('API: Polling', () => {
           Status: 'UpdatesPending'
         };
 
-        const result = pollRes(
+        const result = resolvePollRes(
           rej,
           res,
           fetchData,
@@ -49,7 +75,7 @@ describe('API: Polling', () => {
           Status: 'UpdatesPending'
         };
 
-        const result = pollRes(
+        const result = resolvePollRes(
           rej,
           res,
           fetchData,
