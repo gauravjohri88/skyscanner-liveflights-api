@@ -18,11 +18,9 @@ describe('API: Session', () => {
           country: 'UK',
           currency: 'GBP',
           locale: 'en-GB',
-          locationschema: 'sky',
+          locationschema: 'sky'
         }),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         method: 'POST'
       };
 

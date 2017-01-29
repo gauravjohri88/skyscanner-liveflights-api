@@ -20,13 +20,9 @@ describe('API: Polling', () => {
       const poll = () => of({ some: 'data' });
       const pollRes = spy();
       fetchData('http://moo', poll, pollRes)(rej, res);
-      assert(pollRes.calledWith(
-        rej,
-        res,
-        fetchData,
-        'http://moo',
-        { some: 'data' }
-      ))
+      assert(
+        pollRes.calledWith(rej, res, fetchData, 'http://moo', { some: 'data' })
+      );
     });
   });
 
@@ -35,9 +31,7 @@ describe('API: Polling', () => {
       const rej = spy();
       const res = spy();
       const fetchData = spy();
-      const data = {
-        Status: 'UpdatesComplete'
-      };
+      const data = { Status: 'UpdatesComplete' };
 
       const result = resolvePollRes(rej, res, fetchData, 'url', data);
       assert(res.calledWith(data));
@@ -49,9 +43,7 @@ describe('API: Polling', () => {
         const res = () => {};
         const fetchData = () => {};
         const timeout = spy();
-        const data = {
-          Status: 'UpdatesPending'
-        };
+        const data = { Status: 'UpdatesPending' };
 
         const result = resolvePollRes(
           rej,
@@ -71,9 +63,7 @@ describe('API: Polling', () => {
         const fetchData2 = spy();
         const fetchData = spy(() => fetchData2);
         const timeout = spy();
-        const data = {
-          Status: 'UpdatesPending'
-        };
+        const data = { Status: 'UpdatesPending' };
 
         const result = resolvePollRes(
           rej,
@@ -86,7 +76,7 @@ describe('API: Polling', () => {
 
         timeout.args[0][0]();
         assert(fetchData.calledWith('url'));
-        assert(fetchData2.calledWith(rej, res))
+        assert(fetchData2.calledWith(rej, res));
       });
     });
   });

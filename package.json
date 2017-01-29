@@ -8,6 +8,7 @@
     "coverage": "nyc yarn test && nyc report",
     "coverage:coveralls": "yarn coverage -- --reporter=text-lcov | coveralls",
     "prepublish": "yarn compile",
+    "format": "prettier --write --single-quote src/**/*.js",
     "test": "API_KEY=123 mocha $(find . -name '*spec.js' -not -path './node_modules/*') --compilers js:babel-register"
   },
   "files": [
@@ -39,6 +40,7 @@
     "mocha": "^3.2.0",
     "nyc": "^10.0.0",
     "power-assert": "^1.4.2",
+    "prettier": "^0.13.1",
     "sinon": "^1.17.7"
   }
 }

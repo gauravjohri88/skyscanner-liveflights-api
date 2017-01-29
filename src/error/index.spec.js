@@ -8,12 +8,9 @@ describe('API: Error', () => {
     const error = new ApiError('This is an error message!', {
       foo: 'bar',
       moo: 'cow'
-    })
-    assert.equal(error.message, 'This is an error message!');
-    assert.deepEqual(error.config, {
-      foo: 'bar',
-      moo: 'cow'
     });
+    assert.equal(error.message, 'This is an error message!');
+    assert.deepEqual(error.config, { foo: 'bar', moo: 'cow' });
     assert(error instanceof Error);
   });
 });

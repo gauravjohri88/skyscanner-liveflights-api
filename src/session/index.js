@@ -1,5 +1,16 @@
 import { after } from 'fluture';
-import { always, chain, compose, lensProp, map, merge, over, partial, prop, tap } from 'ramda';
+import {
+  always,
+  chain,
+  compose,
+  lensProp,
+  map,
+  merge,
+  over,
+  partial,
+  prop,
+  tap
+} from 'ramda';
 import { stringify as formatQuerystring } from 'querystring';
 import { format as formatUrl, parse as parseUrl } from 'url';
 
@@ -7,17 +18,27 @@ import { authenticateUrl, log, makeRequest, makeUrl } from '../utils';
 
 const logSession = log(always('Session now accessible \n'));
 
-const logDelay = log(always(`Temporarily witholding session access to due to https://support.business.skyscanner.net/hc/en-us/articles/211308489-Flights-Live-Pricing?_ga=1.109063173.1468313731.1483528061#poll \n`));
+const logDelay = log(
+  always(
+    `Temporarily witholding session access to due to https://support.business.skyscanner.net/hc/en-us/articles/211308489-Flights-Live-Pricing?_ga=1.109063173.1468313731.1483528061#poll \n`
+  )
+);
 
-const delayResponse = compose(logSession, chain(partial(after, [1000])), logDelay);
+const delayResponse = compose(
+  logSession,
+  chain(partial(after, [1000])),
+  logDelay
+);
 
 const addUrlAuthentication = compose(formatUrl, authenticateUrl, parseUrl);
 
-const getPollLocation = map(compose(
-  addUrlAuthentication,
-  headers => headers.get('location'),
-  prop(['headers'])
-));
+const getPollLocation = map(
+  compose(
+    addUrlAuthentication,
+    headers => headers.get('location'),
+    prop(['headers'])
+  )
+);
 
 export const createRequestConfig = query => {
   const config = {
@@ -27,22 +48,17 @@ export const createRequestConfig = query => {
       locale: 'en-GB',
       locationschema: 'sky'
     },
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    method: 'POST'
   };
-  return over(lensProp('body'), compose(formatQuerystring, merge(query)), config);
-}
+  return over(
+    lensProp('body'),
+    compose(formatQuerystring, merge(query)),
+    config
+  );
+};
 
-const requestSession = compose(
-  makeRequest,
-  createRequestConfig
-);
+const requestSession = compose(makeRequest, createRequestConfig);
 
-export default query => compose(
-  delayResponse,
-  getPollLocation,
-  requestSession(query),
-  makeUrl
-)();
+export default query =>
+  compose(delayResponse, getPollLocation, requestSession(query), makeUrl)();
