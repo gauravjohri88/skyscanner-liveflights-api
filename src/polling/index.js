@@ -1,5 +1,6 @@
 import Future, { after, of } from 'fluture';
 import {
+  always,
   chain,
   compose,
   lensIndex,
@@ -13,6 +14,7 @@ import {
 } from 'ramda';
 import { Nothing } from 'sanctuary';
 
+import { log, logC } from '../reporter';
 import { getJson, makeRequest } from '../utils';
 
 const handleResponse = chain(res => {
@@ -24,6 +26,8 @@ const handleResponse = chain(res => {
 
 const poll = compose(handleResponse, makeRequest());
 
+const logInitialPollAttempt = logC(always('Determining if result is complete'));
+
 export const resolvePollRes = (
   rej,
   res,
@@ -33,10 +37,10 @@ export const resolvePollRes = (
   timeout = setTimeout
 ) => {
   if (propEq('Status', 'UpdatesComplete', data)) {
-    console.log('Query result complete');
+    log('Result complete');
     res(data);
   } else {
-    console.log('Query result incomplete. Retrying...');
+    log('Result incomplete. Retrying...');
     timeout(() => fetchData(url)(rej, res), 1000);
   }
 };
@@ -46,4 +50,4 @@ export const fetchData = (url, pollEndpoint = poll, pollRes = resolvePollRes) =>
     pollEndpoint(url).fork(rej, partial(pollRes, [rej, res, fetchData, url]));
   };
 
-export default chain(compose(Future, fetchData));
+export default chain(compose(Future, fetchData, logInitialPollAttempt));

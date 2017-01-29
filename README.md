@@ -82,6 +82,10 @@ getTheFirstItemInTheItinerary({
 
 ```
 
+## Debugging
+
+[`debug`](https://github.com/visionmedia/debug) is supported, so you can log the individual transactions in the orchestration to stdout, by prepending `DEBUG=skyscanner-liveflights-api` to the script that starts your consumer application.
+
 ## Running Tests
 ```bash
 make test

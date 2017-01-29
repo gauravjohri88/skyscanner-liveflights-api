@@ -14,13 +14,16 @@ import {
 import { stringify as formatQuerystring } from 'querystring';
 import { format as formatUrl, parse as parseUrl } from 'url';
 
-import { authenticateUrl, log, makeRequest, makeUrl } from '../utils';
+import { logC } from '../reporter';
+import { authenticateUrl, makeRequest, makeUrl } from '../utils';
 
-const logSession = log(always('Session now accessible \n'));
+const logSession = map(logC(always('Session now accessible')));
 
-const logDelay = log(
-  always(
-    `Temporarily witholding session access to due to https://support.business.skyscanner.net/hc/en-us/articles/211308489-Flights-Live-Pricing?_ga=1.109063173.1468313731.1483528061#poll \n`
+const logDelay = map(
+  logC(
+    always(
+      `Temporarily witholding session access to due to https://support.business.skyscanner.net/hc/en-us/articles/211308489-Flights-Live-Pricing?_ga=1.109063173.1468313731.1483528061#poll`
+    )
   )
 );
 
@@ -58,7 +61,11 @@ export const createRequestConfig = query => {
   );
 };
 
-const requestSession = compose(makeRequest, createRequestConfig);
+const requestSession = compose(
+  makeRequest,
+  logC(always('Creating session')),
+  createRequestConfig
+);
 
 export default query =>
   compose(delayResponse, getPollLocation, requestSession(query), makeUrl)();
